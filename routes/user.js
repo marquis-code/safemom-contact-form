@@ -4,13 +4,13 @@ let router = express.Router();
 require("dotenv").config();
 
 router.post("/signup", async (req, res) => {
-    const { firstName, lastName, email, phoneNumber, tell_us_more_about_your_project } = req.body;
+    const { fullName, email, phone, message } = req.body;
     const auth = new google.auth.GoogleAuth({
       keyFile: "credentials.json",
       scopes: "https://www.googleapis.com/auth/spreadsheets",
     });
     const client = await auth.getClient();
-    const spreadsheetId = "1njz0ejzbRS_2CphhsByOK9rcevnnz9PfoCTzNU9rS1Q";
+    const spreadsheetId = "1fsY4al9UvCIeIlb9vEPFQkPb6UOXDmp1FY-zb8PtbU0";
     const googleSheets = google.sheets({
       version: "v4",
       auth: client,
@@ -33,7 +33,7 @@ router.post("/signup", async (req, res) => {
       range: "Sheet1!A:B",
       valueInputOption: "USER_ENTERED",
       resource: {
-        values: [[firstName, lastName, email, phoneNumber, tell_us_more_about_your_project ]],
+        values: [[ fullName, email, phone, message ]],
       },
     });
   
